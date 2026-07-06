@@ -35,5 +35,6 @@ test('login fallido con contraseña incorrecta', async ({ page }) => {
 
     // MI DUDA PARA S11:
     // Hice todo lo indicado en la tarea y la corrección sugerida por el agente de manera maual agregando la propiedad {exact:false} y {exact:true}, 
-    // pero igual no funnciono. ¿Deseo saber cual puede ser el error o que debo agregar exactamente en la sintaxis del codigo?
+    // pero igual no funnciono. 
+    // ¿Deseo saber cual puede ser el error o que debo agregar exactamente en la sintaxis del codigo?
 })
