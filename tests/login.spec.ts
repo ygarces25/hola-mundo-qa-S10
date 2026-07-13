@@ -101,7 +101,7 @@ test('login con usuario vacio', async ({ page }) => {
 // PREGUNTA: si mañana el botón 'Iniciar sesión' cambia de nombre
 // (por ejemplo, pasa a llamarse 'Entrar'), ¿en cuántos lugares
 // tendría que tocar mi código para que los 3 tests sigan andando?
-// Mi respuesta: Se tendría que tocar Een las 3 líneas de código que dicen: await page.getByRole('button', { name: 'Iniciar sesión' }).click();
+// Mi respuesta: En mi caso como se agrego un 4to test se tendría que tocar en 4 líneas de código que dicen: await page.getByRole('button', { name: 'Iniciar sesión' }).click();
 
 // NOTA de Adriana: Si eliges "email vacío": puede que el navegador NO te deje ni enviar el formulario, porque el campo tiene validación de HTML (`required`) y frena todo antes de llegar al servidor.
 //Eso es un comportamiento DISTINTO al de la contraseña mala (que sí llega al servidor y devuelve un mensaje). Si te pasa eso, "no es un error tuyo: es una observación válida." Anótala y tráela
