@@ -94,9 +94,9 @@ test('login con usuario vacio', async ({ page }) => {
 });
 
 // MI CUENTA PARA S12:
-// Escribí page.goto('/login') 3 veces.
+// Escribí page.goto('/login') 4 veces.
 // Llené el email 3 veces.
-// Clickeé el botón 'Iniciar sesión' 3 veces.
+// Clickeé el botón 'Iniciar sesión' 4 veces.
 //
 // PREGUNTA: si mañana el botón 'Iniciar sesión' cambia de nombre
 // (por ejemplo, pasa a llamarse 'Entrar'), ¿en cuántos lugares
