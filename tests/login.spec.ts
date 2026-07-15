@@ -1,109 +1,59 @@
-// Importamos las dos piezas de Playwright que usamos:
-// - test: para definir un test
-// - expect: para hacer las verificaciones
 import { test, expect } from '@playwright/test';
+import { LoginPage } from '../pages/login-page';
 
-// test('nombre del test', async ({ page }) => { ... })
-// El 'async' y el 'page' vienen del motor de Playwright.
-// 'page' es la pestaña del navegador que el test maneja.
 test('login exitoso con credenciales válidas', async ({ page }) => {
-
-    // ───── PREPARAR (Arrange) ─────
-    // Abrir la página de login.
-    // Escribimos solo '/login' porque el baseURL ya está en el config.
-    // Lleva 'await' porque es asíncrono (S5): el test ESPERA a que cargue.
-    await page.goto('/login');
-
-    // ───── ACTUAR (Act) ─────
-    // Usamos los locators semánticos que elegimos en S4.
-    // getByLabel('Email') agarra el input por su etiqueta. .fill() escribe.
-    await page.getByLabel('Email').fill('ana.garcia@ejemplo.com');
-
-    // Mismo patrón para la contraseña (label "Contraseña").
-    await page.getByLabel('Contraseña').fill('Segura2026!');
-
-    // getByRole('button', { name: '...' }) = el "rey" de S4.
-    // .click() aprieta el botón.
-    await page.getByRole('button', { name: 'Iniciar sesión' }).click();
-
-    // ───── VERIFICAR (Assert) ─────
-    // UNA SOLA verificación, la más liviana: que se vea el mensaje de éxito.
-    // Si está → el test pasa (verde). Si no → falla (rojo).
-    // Hoy NO entramos en la mecánica de las aserciones (cómo espera, qué otras hay):
-    // las aserciones web-first + auto-waiting son el corazón de S11.
-    await expect(page.getByText('Has iniciado sesión correctamente.')).toBeVisible();
+    const loginPage = new LoginPage(page); //Se instancia el Page Object
+    //Preparar
+    await loginPage.goto();
+    //Actuar
+    await loginPage.login('ana.garcia@ejemplo.com', 'Segura2026!');
+    //Verificar
+    await expect(loginPage.mensajeExito).toBeVisible();
 });
 
 test('login fallido con contraseña incorrecta', async ({ page }) => {
-
-    // ───── PREPARAR (Arrange) ─────
-    // Abrir la página de login.
-    // Escribimos solo '/login' porque el baseURL ya está en el config.
-    // Lleva 'await' porque es asíncrono (S5): el test ESPERA a que cargue.
-    await page.goto('/login');
-
-    // ───── ACTUAR (Act) ─────
-    // Usamos los locators semánticos que elegimos en S4.
-    // getByLabel('Email') agarra el input por su etiqueta. .fill() escribe.
-    await page.getByLabel('Email').fill('ana.garcia@ejemplo.com');
-
-    // Mismo patrón para la contraseña (label "Contraseña").
-    await page.getByLabel('Contraseña').fill('ContraseñaMala123');
-
-    // getByRole('button', { name: '...' }) = el "rey" de S4.
-    // .click() aprieta el botón.
-    await page.getByRole('button', { name: 'Iniciar sesión' }).click();
-
-    // ───── VERIFICAR (Assert) ─────
-    // UNA SOLA verificación, la más liviana: que se vea el mensaje de éxito.
-    // Si está → el test pasa (verde). Si no → falla (rojo).
-    // Hoy NO entramos en la mecánica de las aserciones (cómo espera, qué otras hay):
-    // las aserciones web-first + auto-waiting son el corazón de S11.
-    await expect(page.getByText('Email o contraseña incorrectos')).toBeVisible();
+    const loginPage = new LoginPage(page); //Se instancia el Page Object
+    //Preparar
+    await loginPage.goto();
+    //Actuar
+    await loginPage.login('ana.garcia@ejemplo.com', 'ContraseñaMala123');
+    //Verificar
+    await expect(loginPage.mensajeError).toBeVisible();
 });
 
 test('login con usuario inexistente', async ({ page }) => {
-    // PREPARAR
-    await page.goto('/login');
+    const loginPage = new LoginPage(page); //Se instancia el Page Object
+    //Preparar
+    await loginPage.goto();
+    //Actuar
+    await loginPage.login('noexiste@ejemplo.com', 'CualquierCosa123');
+    //Verificar
+    await expect(loginPage.mensajeError).toBeVisible();
+});
 
-    // ACTUAR
-    await page.getByLabel('Email').fill('noexiste@ejemplo.com');
-    await page.getByLabel('Contraseña').fill('CualquierCosa123');
-    await page.getByRole('button', { name: 'Iniciar sesión' }).click();
-
-    // VERIFICAR: ... ⬅️ acá aplicas lo de S11
+test('login con email de formato inválido', async ({ page }) => {
+    const loginPage = new LoginPage(page); //Se instancia el Page Object
+    //Preparar
+    await loginPage.goto();
+    //Actuar
+    await loginPage.login('ana.garcia', 'Segura2026!');
+    // VERIFICAR: ... ⬅️ acá triangulas si es negativo
     // 1) el error SÍ apareció
-    await expect(page.getByText('Email o contraseña incorrectos')).toBeVisible();
+    await expect(loginPage.mensajeError).toBeVisible();
     // 2) el éxito NO apareció
-    await expect(page.getByText('Has iniciado sesión correctamente.')).not.toBeVisible();
+    await expect(loginPage.mensajeExito).not.toBeVisible();
     // 3) sigo en la página de login
     await expect(page).toHaveURL(/.*login/);
 });
 
-test('login con usuario vacio', async ({ page }) => {
-    // PREPARAR
-    await page.goto('/login');
-
-    // ACTUAR
-    // No se llena el campo "Email" a proposito
-    await page.getByLabel('Contraseña').fill('CualquierCosa123');
-    await page.getByRole('button', { name: 'Iniciar sesión' }).click();
-
-    // VERIFICAR: ... ⬅️ acá aplicas lo de S11
-    await expect(page.getByText('El email es obligatorio')).toBeVisible();
-});
-
-// MI CUENTA PARA S12:
-// Escribí page.goto('/login') 4 veces.
-// Llené el email 3 veces.
-// Clickeé el botón 'Iniciar sesión' 4 veces.
+// MI CUENTA PARA S13:
+// Escribí "const loginPage = new LoginPage(page)" 4 veces.
+// Escribí "await loginPage.goto()" 4 veces.
 //
-// PREGUNTA: si mañana el botón 'Iniciar sesión' cambia de nombre
-// (por ejemplo, pasa a llamarse 'Entrar'), ¿en cuántos lugares
-// tendría que tocar mi código para que los 3 tests sigan andando?
-// Mi respuesta: En mi caso como se agrego un 4to test se tendría que tocar en 4 líneas de código que dicen: await page.getByRole('button', { name: 'Iniciar sesión' }).click();
-
-// NOTA de Adriana: Si eliges "email vacío": puede que el navegador NO te deje ni enviar el formulario, porque el campo tiene validación de HTML (`required`) y frena todo antes de llegar al servidor.
-//Eso es un comportamiento DISTINTO al de la contraseña mala (que sí llega al servidor y devuelve un mensaje). Si te pasa eso, "no es un error tuyo: es una observación válida." Anótala y tráela
-//(¿qué pasó distinto vs. la contraseña mala de S11?).
-//Mi respuesta = Se observa que para el caso de “Email vacío” el endpoint del Login no envía ninguna respuesta al servidor y para el caso de “Contraseña incorrecta” el servicio si envía una respuesta.
+// OBSERVACIÓN: esta preparación se repite en TODOS mis tests, idéntica,
+// antes de que empiece lo interesante de cada caso.
+//
+// PREGUNTA: ¿no habría forma de que esta preparación pase SOLA,
+// automáticamente, antes de cada test, sin que yo la escriba cada vez?
+// Lo que se me ocurre:
+// Se me ocurre crear otra clase llamada “LooginPageGoto” que llame a través de un “Import” la clase “LoginPage” y colocar en esa nueva clase el "const loginPage = new LoginPage(page)" y el "await loginPage.goto()" y que la misma sea llamada a través de un “Import” en el login.spec.ts
