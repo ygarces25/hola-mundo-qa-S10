@@ -46,6 +46,26 @@ test('login con email de formato inválido', async ({ page }) => {
     await expect(page).toHaveURL(/.*login/);
 });
 
+//*test('login con Usuario Bloqueado', async ({ page }) => {
+//* const loginPage = new LoginPage(page); //Se instancia el Page Object
+//Preparar
+//*await loginPage.goto();
+//Actuar
+//*await loginPage.login('ana.garcia@ejemplo.com', 'ContraseñaMala123');
+//*await loginPage.login('noexiste@ejemplo.com', 'CualquierCosa123');
+//*await loginPage.login('ana.garcia', 'Segura2026!');
+//*await loginPage.login('ana.garcia', 'Segura2026!');
+// VERIFICAR: ... ⬅️ acá triangulas si es negativo
+// 1) el bloqueado SÍ apareció
+//*await expect(loginPage.mensajeBloqueado).toBeVisible();
+// 2) el error No apareció
+//*await expect(loginPage.mensajeError).not.toBeVisible();
+// 2) el éxito NO apareció
+//*await expect(loginPage.mensajeExito).not.toBeVisible();
+// 3) sigo en la página de login
+//*await expect(page).toHaveURL(/.*login/);
+//*});
+
 // MI CUENTA PARA S13:
 // Escribí "const loginPage = new LoginPage(page)" 4 veces.
 // Escribí "await loginPage.goto()" 4 veces.

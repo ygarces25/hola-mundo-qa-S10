@@ -8,6 +8,7 @@ export class LoginPage {
     readonly botonIngresar: Locator;
     readonly mensajeError: Locator;   // ← expuesto para que el TEST lo afirme (NO hay expect acá)
     readonly mensajeExito: Locator;
+    readonly mensajeBloqueado: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -17,6 +18,7 @@ export class LoginPage {
         this.botonIngresar = page.getByRole('button', { name: 'Iniciar sesión' });
         this.mensajeError = page.getByText('Email o contraseña incorrectos');
         this.mensajeExito = page.getByText('Has iniciado sesión correctamente.');
+        this.mensajeBloqueado = page.getByText('Demasiados intentos fallidos. Cuenta bloqueada por 30 segundos.');
         // ⚠️ usa el texto REAL que viste en el playground (mayúsculas, tildes, puntos)
     }
 
