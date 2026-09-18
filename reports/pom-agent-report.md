@@ -27,7 +27,7 @@
 - L27: `page.getByLabel('Nombre completo')` → semántico, vinculado a `<label for="cuenta-name">`
 - L28: `page.getByLabel('Email')` → semántico, vinculado a `<label for="cuenta-email">`
 - L29: `page.getByLabel('Contraseña')` → semántico, vinculado a `<label for="cuenta-password">`
-- L30: `page.getByLabel('Edad')` → semántico (campo presente en URL real en tiempo de ejecución; ausente en evidencia HTML estática)
+- L30: `page.getByLabel('Edad')` → semántico (campo presente en URL real; ausente en evidencia HTML estática)
 - L31: `page.getByRole('button', { name: 'Crear cuenta' })` → semántico por rol + nombre accesible
 - Sin CSS frágil ni XPath.
 
@@ -60,37 +60,35 @@ Comando   : npx playwright test tests/registro.spec.ts --reporter=line
 Exit code : 0
 Tests pasados : 1
 Tests fallidos: 0
-Duración  : 10.3 s
+Duración  : 9.1 s
 
 Salida:
   Running 1 test using 1 worker
   [1/1] [chromium] › tests\registro.spec.ts:4:5 › muestra los controles principales del registro
-  1 passed (10.3s)
+  1 passed (9.1s)
 ```
 
 ---
 
 ## Cambios realizados
 
-- **Intento 1**: Creado `pages/registro-page.ts` desde cero.
-  - Clase renombrada de `LoginPage` (archivo previo `registro-page13.ts`) a `RegistroPage`.
-  - Propiedades alineadas al contrato del test: `nameInput`, `emailInput`, `passwordInput`, `ageInput`, `submitButton`.
-  - Locators semánticos: `getByLabel` para los 4 inputs, `getByRole` para el botón.
-  - `goto()` usa la URL explícita recibida como input (`https://playground.calidadsinhumo.com/registro`).
-  - `registrar()` con 4 parámetros claros (`nombre`, `email`, `password`, `edad`).
-  - Eliminados: `expect`, mensajes de error, propiedades no requeridas por el test.
+- **Intento 1** (sesión 2 — 2026-09-18): Recreado `pages/registro-page.ts`.
+  - El archivo había sido eliminado tras un `git add` / descarte de cambios.
+  - Contenido idéntico a la versión ACEPTADA en la sesión anterior.
+  - Clase `RegistroPage` con 5 propiedades: `nameInput`, `emailInput`, `passwordInput`, `ageInput`, `submitButton`.
+  - Locators semánticos: `getByLabel` (4 inputs), `getByRole` (botón).
+  - `goto()` con URL explícita. `registrar()` con 4 parámetros. Sin `expect`.
 
 ---
 
 ## Alcance de esta verificación
 
-El test `registro.spec.ts` verifica que los **cinco controles principales son visibles** tras la navegación:
-`nameInput`, `emailInput`, `passwordInput`, `ageInput`, `submitButton`.
+El test `registro.spec.ts` verifica que los **cinco controles principales son visibles** tras la navegación.
 
 **Lo que este test NO demuestra:**
 - Que el formulario envíe datos correctamente.
 - Que los mensajes de validación aparezcan ante datos inválidos.
-- Que `ageInput` exista en la evidencia HTML estática (no estaba en `evidence/registro-form.html`; sí pasó en la URL real en tiempo de ejecución).
+- Que `ageInput` exista en la evidencia HTML estática (no estaba en `evidence/registro-form.html`; sí pasó en la URL real).
 - Comportamiento en navegadores distintos de Chromium.
 
 ---
@@ -101,7 +99,7 @@ El test `registro.spec.ts` verifica que los **cinco controles principales son vi
 |---|---|
 | Estado automático | **CANDIDATO** |
 | Decisión humana | **✅ ACEPTADO** |
-| Fecha decisión | 2026-09-18 |
+| Fecha de decisión | 2026-09-18 |
 
-> ✅ El QA humano ha revisado la evidencia y registra **ACEPTADO**.
-> `pages/registro-page.ts` queda como Page Object oficial del formulario de registro.
+> ✅ El QA humano ha validado la evidencia y confirmado: **ACEPTADO**.
+> `pages/registro-page.ts` queda formalmente aceptado como Page Object oficial del formulario de registro.

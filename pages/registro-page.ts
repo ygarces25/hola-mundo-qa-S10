@@ -22,12 +22,12 @@ export class RegistroPage {
         this.page = page;
 
         // Locators semánticos: getByLabel para inputs, getByRole para el botón.
-        // Se usan los textos exactos de las etiquetas <label> del HTML real.
-        this.nameInput     = page.getByLabel('Nombre completo');
-        this.emailInput    = page.getByLabel('Email');
+        // Textos exactos de las etiquetas <label> del HTML real de la página.
+        this.nameInput = page.getByLabel('Nombre completo');
+        this.emailInput = page.getByLabel('Email');
         this.passwordInput = page.getByLabel('Contraseña');
-        this.ageInput      = page.getByLabel('Edad');
-        this.submitButton  = page.getByRole('button', { name: 'Crear cuenta' });
+        this.ageInput = page.getByLabel('Edad');
+        this.submitButton = page.getByRole('button', { name: 'Crear cuenta' });
     }
 
     /** Navega a la página de registro. */
