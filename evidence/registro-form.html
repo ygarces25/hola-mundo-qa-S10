@@ -1,0 +1,17 @@
+<form class="space-y-5" novalidate="">
+    <div><label for="cuenta-name" class="mb-1.5 block text-sm font-medium">Nombre completo</label><input
+            id="cuenta-name" type="text" placeholder="Tu nombre"
+            class="w-full rounded-md border border-input-border bg-background px-4 py-2.5 text-sm transition-colors placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/20"
+            data-testid="cuenta-registro-name" autocomplete="name" value=""></div>
+    <div><label for="cuenta-email" class="mb-1.5 block text-sm font-medium">Email</label><input id="cuenta-email"
+            type="email" placeholder="tu@ejemplo.com"
+            class="w-full rounded-md border border-input-border bg-background px-4 py-2.5 text-sm transition-colors placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/20"
+            data-testid="cuenta-registro-email" autocomplete="email" value=""></div>
+    <div><label for="cuenta-password" class="mb-1.5 block text-sm font-medium">Contraseña</label><input
+            id="cuenta-password" type="password" placeholder="Mínimo 8 caracteres"
+            class="w-full rounded-md border border-input-border bg-background px-4 py-2.5 text-sm transition-colors placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/20"
+            data-testid="cuenta-registro-password" autocomplete="new-password" value=""></div>
+    <button type="submit"
+        class="w-full rounded-md bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground transition-all hover:scale-[1.02] hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+        data-testid="cuenta-registro-submit">Crear cuenta</button>
+</form>
