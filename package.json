@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test:api": "playwright test tests/api/login-api.spec.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
